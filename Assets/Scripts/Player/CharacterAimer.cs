@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class CharacterAimer : MonoBehaviour
 {
-    public List<PlayerControl> Aims { get; private set; }
+    public List<IPlayer> Aims { get; private set; }
 
     private SphereCollider _collider;
     private int team;
@@ -26,7 +26,7 @@ public class CharacterAimer : MonoBehaviour
 
     public void SetData(float aggroRadius, int team)
     {
-        Aims = new List<PlayerControl>();
+        Aims = new List<IPlayer>();
         Aims.Clear();
         radius = aggroRadius;
 
@@ -43,7 +43,7 @@ public class CharacterAimer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isInited && other.gameObject.layer == 3 && other.gameObject.TryGetComponent(out PlayerControl c) && c.TeamID != team && c.IsAlive)
+        if (isInited && other.gameObject.layer == 3 && other.gameObject.TryGetComponent(out IPlayer c) && c.TeamID != team && c.Character.IsAlive)
         {            
             addAim(c);            
         }
@@ -53,7 +53,7 @@ public class CharacterAimer : MonoBehaviour
     {
         _timer = 0;
 
-        if (isInited && other.gameObject.layer == 3 && other.gameObject.TryGetComponent(out PlayerControl c) && c.TeamID != team && c.IsAlive)
+        if (isInited && other.gameObject.layer == 3 && other.gameObject.TryGetComponent(out IPlayer c) && c.TeamID != team && c.Character.IsAlive)
         {            
             addAim(c);
         }
@@ -61,13 +61,13 @@ public class CharacterAimer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (isInited && other.gameObject.layer == 3 && other.gameObject.TryGetComponent(out PlayerControl c) && c.TeamID != team)
+        if (isInited && other.gameObject.layer == 3 && other.gameObject.TryGetComponent(out IPlayer c) && c.TeamID != team)
         {            
             removeAim(c);
         }
     }
 
-    public void addAim(PlayerControl newAim)
+    public void addAim(IPlayer newAim)
     {
         if (Aims.Contains(newAim)) return;
 
@@ -75,7 +75,7 @@ public class CharacterAimer : MonoBehaviour
         Aims.Add(newAim);
     }
 
-    public void removeAim(PlayerControl newAim)
+    public void removeAim(IPlayer newAim)
     {
         if (!Aims.Contains(newAim)) return;
 

@@ -6,19 +6,18 @@ public class GameLifetimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
     {
-#if UNITY_EDITOR
+
         if (Globals.MainPlayerData == null)
         {
-            Globals.MainPlayerData = new PlayerData();
-            Globals.IsInitiated = true;
+            Globals.MainPlayerData = new PlayerData();            
             Globals.IsMobile = Globals.IsMobileChecker();
             Globals.IsSoundOn = true;
             Globals.IsMusicOn = true;
+            Globals.IsInitiated = true;
             Globals.Language = Localization.GetInstanse("ru").GetCurrentTranslation();
             Globals.CurrentLevel = Globals.MainPlayerData.Rating;
         }
 
-#endif
 
         builder.RegisterComponentInHierarchy<Joystick>();
         builder.RegisterComponentInHierarchy<Musics>();

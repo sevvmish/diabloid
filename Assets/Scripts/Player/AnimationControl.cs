@@ -37,7 +37,7 @@ public class AnimationControl : MonoBehaviour
 
     public void Hit()
     {
-        if (!playerControl.IsAlive) die();
+        if (!playerControl.Character.IsAlive) die();
         hit();
     }
 
@@ -46,7 +46,7 @@ public class AnimationControl : MonoBehaviour
     {
         if (playerControl == null) return;
 
-        if (!playerControl.IsAlive) die();
+        if (!playerControl.Character.IsAlive) die();
 
         if (_timer > 0)
         {
@@ -61,14 +61,8 @@ public class AnimationControl : MonoBehaviour
 
     private void checkMovement()
     {
+        if (!playerControl.Character.IsAlive) die();
         float speed = playerControl.CurrentSpeed;
-
-        /*
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && (int)AnimationState > 3)
-        {
-            AnimationState = AnimationStates.Idle;
-        }
-        */
 
         if (speed < speedLimitWalkRun && speed > minSpeed)
         {

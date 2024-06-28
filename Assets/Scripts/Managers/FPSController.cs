@@ -36,20 +36,9 @@ public class FPSController : MonoBehaviour
     {
         if (!Globals.IsInitiated || Globals.IsLowFPS) return;
 
-        if (Globals.IsInitiated && Globals.CurrentLevel == 0 && !isFirst)
-        {
-            isFirst = true;
-            _firstTimer = 1;
-        }
-
-        if (_firstTimer > 0)
-        {
-            _firstTimer -= Time.deltaTime;
-            return;
-        }
-
         if (_timer > 0.1f)
         {
+            
             _timer = 0;
             if (EasyFpsCounter.EasyFps != null)
             {
@@ -65,10 +54,9 @@ public class FPSController : MonoBehaviour
                 {
                     Globals.IsLowFPS = true;
                     Globals.MainPlayerData.IsLowFPS = true;
-                    SaveLoadManager.Save();
                     QualitySettings.shadows = ShadowQuality.Disable;
-                }
-            }
+                }                
+            }           
 
         }
         else

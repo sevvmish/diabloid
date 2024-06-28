@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     private void Awake()
     {
+        Globals.IsMobile = Globals.IsMobileChecker();
+
         if (Globals.IsMobile)
         {
             QualitySettings.antiAliasing = 2;

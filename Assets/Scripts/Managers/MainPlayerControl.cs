@@ -24,28 +24,36 @@ public class MainPlayerControl : MonoBehaviour
 
         mainPlayerTransform = g.transform;
         mainPlayerControl = g.GetComponent<PlayerControl>();
-        mainPlayerControl.SetData();
+        mainPlayerControl.SetData(CharacterTypes.Viking, Globals.MAIN_PLAYER_TEAM);
     }
 
     private void Update()
-    {
-        
-
+    {        
         if (timer > 0.05f)
         {
             timer = 0;
             
-            if (inputControl.Direction != Vector2.zero)
+            if (Globals.IsMobile)
             {
-                destination = mainPlayerTransform.position + new Vector3(inputControl.Direction.x, 0, inputControl.Direction.y);
-                mainPlayerControl.MoveToPoint(destination);
+                if (inputControl.Direction != Vector2.zero)
+                {
+                    destination = mainPlayerTransform.position + new Vector3(inputControl.Direction.x, 0, inputControl.Direction.y);
+                    mainPlayerControl.MoveToPoint(destination);
+                }
             }
-            else if (inputControl.ClickPoint.magnitude > 0)
+            else
             {
-                Vector2 dir = (new Vector2(inputControl.ClickPoint.x, inputControl.ClickPoint.z) - new Vector2(mainPlayerTransform.position.x, mainPlayerTransform.position.z)).normalized;
-                destination = mainPlayerTransform.position + new Vector3(dir.x, 0, dir.y);
-                mainPlayerControl.MoveToPoint(destination);
-            }
+                if (inputControl.Aim != null)
+                {
+                    mainPlayerControl.TryHitOrMove(inputControl.Aim);
+                }
+                else if (inputControl.ClickPoint.magnitude > 0)
+                {
+                    //Vector2 dir = (new Vector2(inputControl.ClickPoint.x, inputControl.ClickPoint.z) - new Vector2(mainPlayerTransform.position.x, mainPlayerTransform.position.z)).normalized;
+                    //destination = mainPlayerTransform.position + new Vector3(dir.x, 0, dir.y);
+                    mainPlayerControl.MoveToPoint(inputControl.ClickPoint);
+                }
+            }                        
 
         }
         else

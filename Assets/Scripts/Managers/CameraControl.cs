@@ -11,8 +11,8 @@ public class CameraControl : MonoBehaviour
     private Transform cameraBody;
     private Transform mainPlayer;
 
-    private readonly Vector3 defaultPosition = new Vector3(0, 9, -5f);
-    private readonly Vector3 defaultRotation = new Vector3(60, 0, 0);
+    private readonly Vector3 defaultPosition = new Vector3(0, 9, -5.7f);
+    private readonly Vector3 defaultRotation = new Vector3(55, 0, 0);
 
     // Start is called before the first frame update
     void Start()

@@ -15,6 +15,10 @@ public class Globals : MonoBehaviour
 
     public static int CurrentLevel;
 
+    public const int MAIN_PLAYER_TEAM = 1;
+    public const int ENEMIES_TEAM = -1;
+
+
     public static DateTime TimeWhenStartedPlaying;
     public static DateTime TimeWhenLastInterstitialWas;
     public static DateTime TimeWhenLastRewardedWas;
@@ -47,4 +51,13 @@ public class Globals : MonoBehaviour
             return false;
         }
     }
+                
+}
+
+public interface IPlayer
+{
+    int TeamID { get; }
+    Character Character { get; }
+    void ReceiveHit(IPlayer enemy);
+    Transform Transform { get; }
 }

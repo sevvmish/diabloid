@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using VContainer;
 
@@ -10,6 +11,7 @@ public class InputControl : MonoBehaviour
 
     public Vector2 Direction { get; private set; }
     public Vector3 ClickPoint { get; private set; }
+    public PlayerControl Aim { get; private set; }
 
     private LayerMask blockMask;
     private Ray ray;
@@ -18,8 +20,13 @@ public class InputControl : MonoBehaviour
 
     private void Start()
     {
+        if (!Globals.IsMobile)
+        {
+            joystick.gameObject.SetActive(false);
+        }
+
         cameraTransform = _camera.transform.parent;
-        blockMask = LayerMask.GetMask(new string[] { "Ground" }); 
+        blockMask = LayerMask.GetMask(new string[] { "Ground", "Player" }); 
     }
 
     // Update is called once per frame
@@ -27,6 +34,7 @@ public class InputControl : MonoBehaviour
     {
         Direction = Vector2.zero;
         ClickPoint = Vector3.zero;
+        Aim = null;
 
         if (Globals.IsMobile)
         {
@@ -69,6 +77,11 @@ public class InputControl : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, 100, blockMask, QueryTriggerInteraction.Ignore))
                 {
+                    if (hit.collider.gameObject.TryGetComponent(out PlayerControl pc) && pc.Character.IsAlive && pc.TeamID == Globals.ENEMIES_TEAM)
+                    {
+                        Aim = pc;
+                    }
+
                     ClickPoint = hit.point;
                 }
             }
