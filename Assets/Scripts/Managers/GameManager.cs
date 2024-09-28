@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,5 +29,7 @@ public class GameManager : MonoBehaviour
             QualitySettings.shadows = ShadowQuality.All;
             QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
+
+        if (YandexGame.Instance != null) YandexGame.StickyAdActivity(true);
     }
 }

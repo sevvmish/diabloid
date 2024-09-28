@@ -42,6 +42,8 @@ public class Globals : MonoBehaviour
 
     public static bool IsMobileChecker()
     {
+        //return true;
+
         if (Application.isMobilePlatform)
         {
             return true;
